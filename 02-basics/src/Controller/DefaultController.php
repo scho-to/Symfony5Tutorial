@@ -7,19 +7,22 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Services\GiftsService;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DefaultController extends AbstractController
 {
 
-    // public function __construct(GiftsService $gifts) {
-    //     $gifts->gifts = ['a', 'b', 'c', 'd'];
-    // }
+    public function __construct($logger) {
+        //use $logger defined in services.yaml in config folder
+    }
 
     #[Route('/', name: 'default')]
-    public function index(GiftsService $gifts): Response
+    public function index(GiftsService $gifts, ManagerRegistry $doctrine): Response
     {
         //$users = ['Adam', 'Robert', 'John', 'Susan'];
-        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        $manager = $doctrine->getManager();
+        $users = $manager->getRepository(User::class)->findAll();
         
         $this->addFlash(
            'notice',
@@ -71,5 +74,34 @@ class DefaultController extends AbstractController
     public function index4(): Response
     {
         return new Response("language Paths");
+    }
+
+    /**
+     * @Route("/generate-url/{param?}", name="generate_route")
+     */
+    public function generate_url($param=10): Response
+    {
+        exit($this->generateUrl(
+            'generate_route',
+            array('param' => $param),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ));
+    }
+
+    /**
+     * @Route("/download", name="dwnld")
+     */
+    public function download(): Response
+    {
+        $path = $this->getParameter('download_directory');
+        return $this->file($path.'test.txt');
+    }
+
+    /**
+     * @Route("/redirect-test", name="red-test")
+     */
+    public function redirect_test(): Response
+    {
+        return $this->redirectToRoute('generate_route', array('param' => 221));
     }
 }
