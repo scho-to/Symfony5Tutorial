@@ -20,13 +20,11 @@ class DefaultController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
 
-        $id = 1;
+        $id = 2;
         $user = $entityManager->getRepository(User::class)->find($id);
-        if (!$user) {
-            throw $this->createNotFoundException("no user found");
-        }
-        $user->setName("NewUserName");
-        $entityManager->flush();
+        
+        // $entityManager->remove($user);
+        // $entityManager->flush();
         dump($user);
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController'
