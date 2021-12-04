@@ -47,4 +47,13 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function customQuery() {
+        $qb = $this->createQueryBuilder('u')
+            ->where('u.id > :id')
+            ->setParameter('id', 3);
+        
+        $query = $qb->getQuery();
+        return $query->execute();
+    }
 }
