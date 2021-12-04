@@ -25,4 +25,14 @@ class DefaultController extends AbstractController
             'controller_name' => 'DefaultController'
         ]);
     }
+
+    public function mostPopularPosts($number = 3){
+        $posts = [];
+        for($i = 1; $i <= $number; $i++){
+            $posts[] = "Post ".$i;
+        }
+        return $this->render('default/most_pupular_posts.html.twig', [
+            'posts' => $posts
+        ]);
+    }
 }
