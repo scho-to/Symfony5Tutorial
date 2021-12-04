@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,22 +18,14 @@ class DefaultController extends AbstractController
     #[Route('/home', name: 'home')]
     public function index(ManagerRegistry $doctrine): Response
     {
-        //$users = ['Adam', 'Robert', 'John', 'Susan'];
-        //$manager = $doctrine->getManager();
-        //$users = $manager->getRepository(User::class)->findAll();
-        
+        $repository = $doctrine->getRepository(User::class);
+        //$user = $repository->find(1);
+        //$user = $repository->findOneBy(['name' => 'Robert', 'id' => 6]);
+        //$users = $repository->findBy(['name' => 'Robert'], ['id' => 'DESC'] );
+        $users = $repository->findAll();
+        dump($users);
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController'
-        ]);
-    }
-
-    public function mostPopularPosts($number = 3){
-        $posts = [];
-        for($i = 1; $i <= $number; $i++){
-            $posts[] = "Post ".$i;
-        }
-        return $this->render('default/most_pupular_posts.html.twig', [
-            'posts' => $posts
         ]);
     }
 }
