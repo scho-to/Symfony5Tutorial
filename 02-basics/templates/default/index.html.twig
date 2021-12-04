@@ -18,15 +18,6 @@
         <li>Your controller at <code><a href="{{ 'C:/Users/tobia/Desktop/Xampp/htdocs/02-basics/src/Controller/DefaultController.php'|file_link(0) }}">src/Controller/DefaultController.php</a></code></li>
         <li>Your template at <code><a href="{{ 'C:/Users/tobia/Desktop/Xampp/htdocs/02-basics/templates/default/index.html.twig'|file_link(0) }}">templates/default/index.html.twig</a></code></li>
     </ul>
-    {{path('home')}}<br />
-    {{url('home')}}<br />
-    {{ asset('test.txt') }}<br />
-    {{ absolute_url(asset('test.txt')) }}
+    <p>The google tracking code is: {{ga_code}}</p>
 </div>
-{% endblock %}
-{% block javascripts %}
-<script>
-    var route = "{{string|escape('js')}}";
-    alert(route);
-</script>
 {% endblock %}
