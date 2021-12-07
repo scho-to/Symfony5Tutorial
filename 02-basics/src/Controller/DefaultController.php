@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Address;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,18 +20,28 @@ class DefaultController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
 
-        $user = new User();
-        $user->setName("Tobias");
-        $address = new Address();
-        $address->setStreet("street");
-        $address->setNumber(1);
-        $user->setAddress($address);
+        // for ($i=1; $i <= 4; $i++) { 
+        //     $user = new User();
+        //     $user->setName("User - ".$i);
+        //     $entityManager->persist($user);
+        // }
 
-        $entityManager->persist($user);
-        //$entityManager->persist($address);
+        // $entityManager->flush();
+        // dump("last user id - ".$user->getId());
 
-        $entityManager->flush();
-        dump($user->getAddress()->getStreet());
+        $user1 = $entityManager->getRepository(User::class)->find(1);
+        // $user2 = $entityManager->getRepository(User::class)->find(2);
+        // $user3 = $entityManager->getRepository(User::class)->find(3);
+        $user4 = $entityManager->getRepository(User::class)->find(4);
+
+        // $user1->addFollowed($user2);
+        // $user1->addFollowed($user3);
+        // $user1->addFollowed($user4);
+        // $entityManager->flush();
+
+        dump($user1->getFollowed()->count());
+        dump($user1->getFollowing()->count());
+        dump($user4->getFollowing()->count());
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController'
