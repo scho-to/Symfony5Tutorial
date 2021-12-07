@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Address;
 use App\Entity\User;
-use App\Entity\Video;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,20 +19,20 @@ class DefaultController extends AbstractController
     #[Route('/home', name: 'home')]
     public function index(ManagerRegistry $doctrine): Response
     {
-        $user = $doctrine->getRepository(User::class)->find(1);
         $entityManager = $doctrine->getManager();
 
-        $video = $doctrine->getRepository(Video::class)->find(1);
-        $user->removeVideo($video);
+        $user = new User();
+        $user->setName("Tobias");
+        $address = new Address();
+        $address->setStreet("street");
+        $address->setNumber(1);
+        $user->setAddress($address);
+
+        $entityManager->persist($user);
+        //$entityManager->persist($address);
+
         $entityManager->flush();
-
-        foreach ($user->getVideos() as $video) {
-            dump($video->getTitle());
-        }
-
-        // $entityManager->remove($user);
-        // $entityManager->flush();
-        // $dump($user);
+        dump($user->getAddress()->getStreet());
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController'
