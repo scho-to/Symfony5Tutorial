@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Entity\Video;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,20 +19,7 @@ class DefaultController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
 
-        // $user = new User();
-        // $user->setName("Robert");
-
-        // for ($i=1; $i <= 3; $i++) { 
-        //     $video = new Video();
-        //     $video->setTitle("VideoTitle".$i);
-        //     $user->addVideo($video);
-        //     $entityManager->persist($video);
-        // }
-
-        // $entityManager->persist($user);
-        
-        $user = $entityManager->getRepository(User::class)->findWithVideos(1);
-        dump($user);
+        dump("yey");
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController'
