@@ -47,4 +47,15 @@ class AuthorRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findByIdWithPdf($id) {
+        $qb = $this->createQueryBuilder("a")
+            ->where('a.id = :id')
+            ->setParameter("id", $id)
+            ->innerJoin("a.files", "f")
+            ->andWhere("f INSTANCE OF App\Entity\Pdf")
+            ->addSelect("f")
+        ;
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }

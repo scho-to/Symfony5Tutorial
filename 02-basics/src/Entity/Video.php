@@ -13,47 +13,12 @@ class Video extends File
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="videos")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $user;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $format;
 
     /**
      * @ORM\Column(type="integer")
      */
     private $duration;
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    public function getUser(): ?user
-    {
-        return $this->user;
-    }
-
-    public function setUser(?user $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 
     public function getFormat(): ?string
     {
