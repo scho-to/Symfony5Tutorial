@@ -2,10 +2,23 @@
 
 namespace App\Services;
 
+use Doctrine\ORM\Event\PostFlushEventArgs;
+
 class MyService {
 
-    public function __construct($one)
+    public function __construct()
     {
-        dump("Hi! ".$one);
+        dump("Hi!");
+    }
+
+    public function postFlush(PostFlushEventArgs $args)
+    {
+        dump("postFlush here!");
+        dump($args);
+    }
+
+    public function clear()
+    {
+        dump("hello from clear");
     }
 }
