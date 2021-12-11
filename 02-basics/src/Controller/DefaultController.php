@@ -2,10 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Author;
-use App\Entity\File;
-use App\Entity\Pdf;
-use App\Entity\Video;
+use App\Services\MyService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,16 +16,9 @@ class DefaultController extends AbstractController
     }
 
     #[Route('/home', name: 'home')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(ManagerRegistry $doctrine, MyService $myService): Response
     {
-        $entityManager = $doctrine->getManager();
-        $author = $entityManager->getRepository(Author::class)->findByIdWithPdf(1);
-        dump($author);
-        foreach ($author->getFiles() as $file) {
-            //if ($file instanceof Pdf)
-            dump($file->getFileName());
-        }
-
+        
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController'
         ]);
