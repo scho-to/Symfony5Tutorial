@@ -7,4 +7,14 @@ class MySecondService {
     {
         dump("from second service");
     }
+
+    public function doSomething()
+    {
+        // ...
+    }
+
+    public function doSomething2()
+    {
+        return 'wow';
+    }
 }

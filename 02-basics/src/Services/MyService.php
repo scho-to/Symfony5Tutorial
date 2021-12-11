@@ -3,8 +3,24 @@
 namespace App\Services;
 
 class MyService {
-    public function __construct(MySecondService $second_service)
+
+    use OptionalServiceTrait;
+
+    public function __construct()
     {
-        dump($second_service);
+        //dump('');
     }
+
+    public function someAction()
+    {
+        dump($this->service->doSomething2());
+    }
+
+    /**
+     * @required
+     */
+    // public function setSecondService(MySecondService $second_service)
+    // {
+    //     dump($second_service);
+    // }
 }
