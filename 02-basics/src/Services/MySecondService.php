@@ -8,13 +8,8 @@ class MySecondService {
         dump("from second service");
     }
 
-    public function doSomething()
+    public function someMethod()
     {
-        // ...
-    }
-
-    public function doSomething2()
-    {
-        return 'wow';
+        return ' hello ! ';
     }
 }

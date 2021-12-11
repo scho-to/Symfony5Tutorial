@@ -27,6 +27,8 @@ services:
     # please note that last definitions always *replace* previous ones
 
     App\Services\MyService:
-        properties:
-            my: '@App\Services\MySecondService'
-            logger: '@monolog.logger'
+        arguments:
+            $service: '@App\Services\MySecondService'
+    
+    App\Services\MySecondService:
+        lazy: true

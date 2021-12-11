@@ -4,18 +4,9 @@ namespace App\Services;
 
 class MyService {
 
-    public $logger;
-    public $my;
-
-    public function __construct()
+    public function __construct($service)
     {
-        //dump($this->logger);
-        //dump($this->my);
-    }
-
-    public function someAction()
-    {
-        dump($this->logger);
-        dump($this->my);
+        dump($service);
+        $this->secService = $service;
     }
 }

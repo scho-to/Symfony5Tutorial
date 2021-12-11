@@ -14,7 +14,7 @@ class DefaultController extends AbstractController
     public function index(ManagerRegistry $doctrine, MyService $myService): Response
     {
         $entityManager = $doctrine->getManager();
-        $myService->someAction();
+        dump($myService->secService->someMethod());
         
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController'
