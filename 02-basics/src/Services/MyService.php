@@ -4,23 +4,18 @@ namespace App\Services;
 
 class MyService {
 
-    use OptionalServiceTrait;
+    public $logger;
+    public $my;
 
     public function __construct()
     {
-        //dump('');
+        //dump($this->logger);
+        //dump($this->my);
     }
 
     public function someAction()
     {
-        dump($this->service->doSomething2());
+        dump($this->logger);
+        dump($this->my);
     }
-
-    /**
-     * @required
-     */
-    // public function setSecondService(MySecondService $second_service)
-    // {
-    //     dump($second_service);
-    // }
 }

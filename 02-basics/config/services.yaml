@@ -27,4 +27,6 @@ services:
     # please note that last definitions always *replace* previous ones
 
     App\Services\MyService:
-        autowire: true
+        properties:
+            my: '@App\Services\MySecondService'
+            logger: '@monolog.logger'
