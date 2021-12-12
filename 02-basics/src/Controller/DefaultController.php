@@ -23,7 +23,7 @@ class DefaultController extends AbstractController
         //$entityManager = $doctrine->getManager();
 
         $video = new stdClass();
-        $video->title = "Funny movie";
+        $video->title = "Funny movie!!";
         $video->category = "funny";
 
         $event = new VideoCreatedEvent($video);
