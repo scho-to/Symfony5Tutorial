@@ -5,16 +5,29 @@ namespace App\Controller;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use App\Events\VideoCreatedEvent;
+use stdClass;
 
 class DefaultController extends AbstractController
 {
-    #[Route('/home', name: 'home')]
-    public function index(Request $request, ManagerRegistry $doctrine)
+    private ?EventDispatcherInterface $dispatcher = null;
+    public function __construct(EventDispatcherInterface $dispatcher)
     {
-        $entityManager = $doctrine->getManager();
+        $this->dispatcher = $dispatcher;
+    }
 
-        dump($request, $this);
+    #[Route('/home', name: 'home')]
+    public function index(ManagerRegistry $doctrine)
+    {
+        //$entityManager = $doctrine->getManager();
+
+        $video = new stdClass();
+        $video->title = "Funny movie";
+        $video->category = "funny";
+
+        $event = new VideoCreatedEvent($video);
+        $this->dispatcher->dispatch($event, 'video.created.event');
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController'
