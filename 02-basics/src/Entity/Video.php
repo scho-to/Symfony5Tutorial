@@ -2,45 +2,87 @@
 
 namespace App\Entity;
 
-use App\Repository\VideoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=VideoRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\VideoRepository")
  */
-class Video extends File
+class Video
 {
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $format;
+    private $title;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="videos")
      */
-    private $duration;
+    private $user;
 
-    public function getFormat(): ?string
+    public function getId(): ?int
     {
-        return $this->format;
+        return $this->id;
     }
 
-    public function setFormat(string $format): self
+    public function getFile(): ?string
     {
-        $this->format = $format;
+        return $this->file;
+    }
+
+    public function setFile(string $file): self
+    {
+        $this->file = $file;
 
         return $this;
     }
 
-    public function getDuration(): ?int
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->duration;
+        return $this->created_at;
     }
 
-    public function setDuration(int $duration): self
+    public function setCreatedAt(\DateTimeInterface $created_at): self
     {
-        $this->duration = $duration;
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
 }
+
