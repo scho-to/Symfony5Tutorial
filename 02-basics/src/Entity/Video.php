@@ -19,11 +19,15 @@ class Video
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
+     * @Assert\Type("\DateTime")
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min = 2, max = 10, minMessage = "Video title must be > {{ limit }} characters long", maxMessage = "Video title must be > {{ limit }} characters long")
      */
     private $title;
 
