@@ -24,8 +24,9 @@ class DefaultController extends AbstractController
     #[Route('/home', name: 'home')]
     public function index(ManagerRegistry $doctrine, Request $request)
     {
-        //$entityManager = $doctrine->getManager();
-
+        $entityManager = $doctrine->getManager();
+        $videos = $entityManager->getRepository(Video::class)->findAll();
+        dump($videos);
         $video = new Video();
         //$video->setTitle("Wrtie a blog post");
         //$video->setCreatedAt(new DateTime("tomorrow"));
@@ -34,8 +35,9 @@ class DefaultController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) { 
-            dump($form->getData());
-            //return $this->redirectToRoute("home");
+            $entityManager->persist($video);
+            $entityManager->flush();
+            return $this->redirectToRoute("home");
         }
 
         return $this->render('default/index.html.twig', [
