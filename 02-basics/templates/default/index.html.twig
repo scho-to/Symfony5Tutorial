@@ -17,9 +17,14 @@
         <li>Your template at <code><a href="{{ 'C:/Users/tobia/Desktop/Xampp/htdocs/02-basics/templates/default/index.html.twig'|file_link(0) }}">templates/default/index.html.twig</a></code></li>
     </ul>
     {%form_theme form 'form_table_layout.html.twig'%}
-    {# {{form_start(form)}}
-    {{form_widget(form)}}
-    {{form_end(form)}} #}
-    {{form(form)}}
+    {{form_start(form)}}
+    {{form_label(form.title)}}
+    {{form_widget(form.title)}}
+    {% if form.created_at is defined%}
+    {{form_label(form.created_at)}}
+    {{form_widget(form.created_at)}}
+    {% endif %}
+    {{form_end(form)}}
+    {# {{form(form)}} #}
 </div>
 {% endblock %}

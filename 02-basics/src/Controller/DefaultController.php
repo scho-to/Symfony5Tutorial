@@ -30,6 +30,7 @@ class DefaultController extends AbstractController
         $video = new Video();
         //$video->setTitle("Wrtie a blog post");
         //$video->setCreatedAt(new DateTime("tomorrow"));
+        //$video = $entityManager->getRepository(Video::class)->find(1);
 
         $form = $this->createForm(VideoFormType::class, $video);
         $form->handleRequest($request);
