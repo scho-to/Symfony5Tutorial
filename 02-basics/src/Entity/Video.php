@@ -36,6 +36,16 @@ class Video
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\File(
+     *  maxSize="1024k",
+     *  mimeTypes = {"video/mp4", "application/pdf", "application/x-pdf"},
+     *  mimeTypesMessage = "Please upload a valid video"
+     * )
+     */
+    private $file;
+
     public function getId(): ?int
     {
         return $this->id;

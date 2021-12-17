@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class VideoFormType extends AbstractType
 {
@@ -26,6 +27,9 @@ class VideoFormType extends AbstractType
             ->add("agreeTerms", CheckboxType::class, [
                 'label' => "Agree?",
                 'mapped' => false
+            ])
+            ->add("file", FileType::class, [
+                'label' => 'Video (MP4 file)'
             ])
             ->add("save", SubmitType::class, [
                 'label' => "Add a video"
