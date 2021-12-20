@@ -18,8 +18,9 @@
     </ul>
     {% if app.user %}
         <a href="{{path('logout')}}">Logout</a>
-    {# {% else %}
-        {{form(form)}} #}
+    {% else %}
+        {{form(form)}}
+        <a href="/login">Have an account?</a>
     {% endif %}
 </div>
 {% endblock %}

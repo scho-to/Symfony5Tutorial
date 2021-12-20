@@ -5,19 +5,29 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <form action="{{ path('login') }}" method="post">
-        <div class="mb-3">
-            <label for="username">Email:</label>
-            <input type="text" id="username" name="email" value="{{ last_username }}" class="form-control"/>        
-        </div>
-        <div class="mb-3">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" class="form-control"/>
-        </div>
-        {# If you want to control the URL the user is redirected to on success #}
-        <input type="hidden" name="_target_path" value="/home"/>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    <div class="p-3">
+        {% if app.user %}
+            <p>You are already logged in. <a href="/home">Click here to go to Home</a></p>            
+        {% else %}
+            <form action="{{ path('login') }}" method="post">
+                <div class="mb-3">
+                    <label for="username">Email:</label>
+                    <input type="text" id="username" name="email" value="{{ last_username }}" class="form-control"/>        
+                </div>
+                <div class="mb-3">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control"/>
+                </div>
+                <div class="mb-3">
+                    <input type="checkbox" id="remember_me" name="_remember_me" class="form-check-input"/>
+                    <label for="remember_me">Keep me logged in</label>
+                </div>
+                {# If you want to control the URL the user is redirected to on success #}
+                <input type="hidden" name="_target_path" value="/home"/>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-        <button type="submit" class="btn btn-primary">login</button>
-    </form>
+                <button type="submit" class="btn btn-primary">login</button>
+            </form>
+        {% endif %}
+    </div>
 {% endblock %}
