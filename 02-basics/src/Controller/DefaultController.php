@@ -20,6 +20,7 @@ class DefaultController extends AbstractController
         // $entityManager = $doctrine->getManager();
         // $users = $entityManager->getRepository(SecurityUser::class)->findAll();
         // dump($users);
+        $this->denyAccessUnlessGranted("IS_AUTHENTICATED_REMEMBERED");
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
