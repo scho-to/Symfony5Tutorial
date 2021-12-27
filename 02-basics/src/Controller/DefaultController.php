@@ -2,29 +2,24 @@
 
 namespace App\Controller;
 
-use App\Entity\SecurityUser;
-use App\Entity\Video;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class DefaultController extends AbstractController
 {
     /**
-     * @Route("/home/{id}/delete-video", name="home")
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @Route("/home", name="home")
      */
-    public function index(ManagerRegistry $doctrine, Request $request, UserPasswordHasherInterface $passwordHasher, Video $video)
+    public function index(ManagerRegistry $doctrine, Request $request, UserPasswordHasherInterface $passwordHasher)
     {
-        $entityManager = $doctrine->getManager();
-        $users = $entityManager->getRepository(SecurityUser::class)->findAll();
-        dump($users);
-        dump($video);
+        // $entityManager = $doctrine->getManager();
+        // $users = $entityManager->getRepository(SecurityUser::class)->findAll();
+        // dump($users);
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
