@@ -3,41 +3,31 @@
 namespace App\Controller;
 
 use App\Entity\SecurityUser;
+use App\Entity\Video;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use App\Form\RegisterUserType;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 class DefaultController extends AbstractController
 {
-    #[Route('/home', name: 'home')]
-    public function index(ManagerRegistry $doctrine, Request $request, UserPasswordHasherInterface $passwordHasher)
+    /**
+     * @Route("/home/{id}/delete-video", name="home")
+     * @Security("is_granted('ROLE_ADMIN')")
+     */
+    public function index(ManagerRegistry $doctrine, Request $request, UserPasswordHasherInterface $passwordHasher, Video $video)
     {
         $entityManager = $doctrine->getManager();
         $users = $entityManager->getRepository(SecurityUser::class)->findAll();
         dump($users);
-
-        $user = new SecurityUser();
-        $form = $this->createForm(RegisterUserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $user->setPassword($passwordHasher->hashPassword($user, $form->get('password')->getData()));
-            $user->setEmail($form->get("email")->getData());
-    
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            $this->redirectToRoute("home");
-        }
+        dump($video);
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
-            'form' => $form->createView()
         ]);
     }
 
