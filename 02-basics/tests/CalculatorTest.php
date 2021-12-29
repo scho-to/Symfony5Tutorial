@@ -11,6 +11,6 @@ class CalculatorTest extends TestCase
     {
         $cal = new Calculator();
         $result = $cal->add(1,9);
-        $this->assertEquals(11,$result);
+        $this->assertEquals(10,$result);
     }
 }
