@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Video;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,9 +18,9 @@ class DefaultController extends AbstractController
      */
     public function index(ManagerRegistry $doctrine, Request $request, UserPasswordHasherInterface $passwordHasher)
     {
-        // $entityManager = $doctrine->getManager();
-        // $video = $entityManager->getRepository(Video::class)->find(1);
-        // dump($users);
+        $entityManager = $doctrine->getManager();
+        $videos = $entityManager->getRepository(Video::class)->findAll();
+        dump($videos);
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
