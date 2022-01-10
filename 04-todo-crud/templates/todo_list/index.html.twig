@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TodoListController!{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="p-3 mx-auto text-center">
+            <h3>My Todo List</h3>
+            <form action="{{path('create_task')}}" method="POST">
+                <div class="row">
+                    <div class="col-9">
+                        <input type="text" name="title" class="form-control" />
+                    </div>
+                    <div class="col-3">
+                        <div class="d-grid">
+                            <button class="btn btn-primary" type="submit">Add a task</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card">
+            <ul class="list-group">
+                {% for task in tasks %}
+                    <li class="list-group-item">
+                        <div class="row justify-content-between{% if task.status %} bg-warning{% endif %}
+                        ">
+                            <div class="col-10">
+                                <a href="{{path('switch_status',{'id': task.id})}}" class="d-block text-decoration-none text-reset{% if task.status %} text-decoration-line-through{% endif %}
+                                ">{{task.title}}</a>
+                            </div>
+                            <div class="col text-end">
+                                <a href="{{path('delete_task',{'id': task.id})}}" class="d-block text-decoration-none ">X</a>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
