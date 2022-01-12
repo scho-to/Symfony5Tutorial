@@ -78,6 +78,10 @@
         }
     },
     "require-dev": {
-        "doctrine/doctrine-fixtures-bundle": "^3.4"
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "symfony/debug-bundle": "5.*",
+        "symfony/stopwatch": "5.*",
+        "symfony/var-dumper": "5.*",
+        "symfony/web-profiler-bundle": "5.*"
     }
 }
