@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
+use App\Repository\CategoryRepository;
 use App\Utils\CategoryTreeAdminList;
 use App\Utils\CategoryTreeAdminOptionList;
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,7 +23,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/categories', name: 'categories', methods: ['GET', 'POST'])]
-    public function categories(CategoryTreeAdminList $categories, Request $request): Response
+    public function categories(CategoryTreeAdminList $categories, Request $request, CategoryRepository $categoryRepository, ManagerRegistry $doctrine): Response
     {
         $categories->getCategoryList($categories->buildTree());
 
@@ -32,7 +33,15 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
-            dd('valid');
+            $category->setName($request->request->get('category')['name']);
+            $parent = $categoryRepository->find($request->request->get('category')['parent']);
+            $category->setParent($parent);
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($category);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('categories');
         }
         elseif($request->isMethod('post'))
         {
