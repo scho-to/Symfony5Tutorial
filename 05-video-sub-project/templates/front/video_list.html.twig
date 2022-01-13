@@ -19,7 +19,7 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <ul class="mr-5">
                                     <li><a href="{{path('video_list', {'categoryname': subcategories.mainParentName|slugify|lower, 'id':subcategories.mainParentId})}}">{{subcategories.mainParentName}}</a></li>
-                                    {{subcategories.categorielist|raw}}
+                                    {{subcategories.categorylist|raw}}
                                 </ul>
                             </div>
                         </div>

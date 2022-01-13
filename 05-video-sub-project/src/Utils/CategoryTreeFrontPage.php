@@ -30,20 +30,20 @@ class CategoryTreeFrontPage extends CategoryTreeAbstract {
 
     public function getCategoryList(array $categories_array)
     {
-        $this->categorielist .= $this->html_1;
+        $this->categorylist .= $this->html_1;
         foreach($categories_array as $value)
         {
             $catName = $this->slugger->slugify($value['name']);
             $url = $this->urlgenerator->generate('video_list', ['categoryname' => $catName, 'id' => $value['id']]);
-            $this->categorielist .= $this->html_2.$this->html_3.$url.$this->html_4.$catName.$this->html_5;
+            $this->categorylist .= $this->html_2.$this->html_3.$url.$this->html_4.$value['name'].$this->html_5;
             if (!empty($value['children']))
             {
                 $this->getCategoryList($value['children']);
             }
-            $this->categorielist .= $this->html_6;
+            $this->categorylist .= $this->html_6;
         }
-        $this->categorielist .= $this->html_7;
-        return $this->categorielist;
+        $this->categorylist .= $this->html_7;
+        return $this->categorylist;
     }
 
     public function getMainParent(int $id): array

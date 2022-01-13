@@ -20,7 +20,7 @@ class Category
     private $name;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'subcategory')]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn(nullable: true, name: 'parent_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private $parent;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
