@@ -30,17 +30,8 @@ class AdminController extends AbstractController
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $is_invalid = null;
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid())
+        if($this->saveCategory($category, $form, $request, $categoryRepository, $doctrine))
         {
-            $category->setName($request->request->get('category')['name']);
-            $parent = $categoryRepository->find($request->request->get('category')['parent']);
-            $category->setParent($parent);
-
-            $entityManager = $doctrine->getManager();
-            $entityManager->persist($category);
-            $entityManager->flush();
-
             return $this->redirectToRoute('categories');
         }
         elseif($request->isMethod('post'))
@@ -55,11 +46,25 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/edit-category/{id}', name: 'edit_category')]
-    public function editCategory(Category $category): Response
+    #[Route('/edit-category/{id}', name: 'edit_category',  methods: ['GET', 'POST'])]
+    public function editCategory(Category $category, Request $request, CategoryRepository $categoryRepository, ManagerRegistry $doctrine): Response
     {
+        $form = $this->createForm(CategoryType::class, $category);
+        $is_invalid = null;
+
+        if($this->saveCategory($category, $form, $request, $categoryRepository, $doctrine))
+        {
+            return $this->redirectToRoute('categories');
+        }
+        elseif($request->isMethod('post'))
+        {
+            $is_invalid = ' is-invalid';
+        }
+
         return $this->render('admin/edit_category.html.twig', [
-            'category' => $category
+            'category' => $category,
+            'form' => $form->createView(),
+            'isInvalid' => $is_invalid
         ]);
     }
 
@@ -97,5 +102,23 @@ class AdminController extends AbstractController
             'categories' => $categories->categorylist,
             'editedCategory' => $editedCategory
         ]);
+    }
+
+    private function saveCategory($category, $form, $request, CategoryRepository $categoryRepository, ManagerRegistry $doctrine)
+    {
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $category->setName($request->request->get('category')['name']);
+            $parent = $categoryRepository->find($request->request->get('category')['parent']);
+            $category->setParent($parent);
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($category);
+            $entityManager->flush();
+
+            return true;
+        }
+        return false;
     }
 }
