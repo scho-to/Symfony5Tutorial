@@ -2,7 +2,6 @@
 
 namespace App\Utils;
 
-use App\Twig\AppExtension;
 use App\Utils\AbstractClasses\CategoryTreeAbstract;
 
 class CategoryTreeAdminList extends CategoryTreeAbstract {
