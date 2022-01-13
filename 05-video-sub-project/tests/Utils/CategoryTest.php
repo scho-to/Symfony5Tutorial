@@ -8,17 +8,30 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 class CategoryTest extends KernelTestCase
 {
     protected $mockedCategoryTreeFrontPage;
+    protected $mockedCategoryTreeAdminList;
+    protected $mockedCategoryTreeAdminOptionList;
+
     protected function setUp(): void
     {
         $kernel = self::bootKernel();
         $urlgenerator = $kernel->getContainer()->get('router');
 
-        $this->mockedCategoryTreeFrontPage = $this->getMockBuilder('App\Utils\CategoryTreeFrontPage')
-        ->disableOriginalConstructor()
-        ->setMethods()
-        ->getMock();
+        $tested_classes = [
+            'CategoryTreeAdminList',
+            'CategoryTreeAdminOptionList',
+            'CategoryTreeFrontPage'
+        ];
 
-        $this->mockedCategoryTreeFrontPage->urlgenerator = $urlgenerator;
+        foreach($tested_classes as $class)
+        {
+            $name = "mocked".$class;
+            $this->$name = $this->getMockBuilder('App\Utils\\'.$class)
+            ->disableOriginalConstructor()
+            ->setMethods()
+            ->getMock();
+
+            $this->$name->urlgenerator = $urlgenerator;
+        }
     }
 
     /**
